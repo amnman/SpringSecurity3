@@ -56,10 +56,12 @@ public class JwtWebSecurityConfig{
 		http.csrf(csrf->csrf.disable())
 		    .cors(cors->cors.disable())
 		    .authorizeHttpRequests(rq->{
-		    	rq.requestMatchers("/api/login","/api/register","/api/roles","/h2-console/**").permitAll().anyRequest().authenticated();
+		    	rq.requestMatchers("/api/login","/api/register","/api/roles","/h2-console/**","/favicon.ico").permitAll().anyRequest().authenticated();
 		    	})
 		    .exceptionHandling(ex->ex.authenticationEntryPoint(jwtAuthEntryPoint))
 		    .sessionManagement(sm->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+		
+		http.headers(h->h.frameOptions(f->f.disable()));
 		
 		http.authenticationProvider(authenticationProvider());
 		
